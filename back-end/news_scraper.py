@@ -19,8 +19,8 @@ class NewsScraper:
         for topic in topics:
             async with self._rate_limiter:
                 try:
-                    results = get_news(query=topic)
-                    headlines = fetch_head_lines(results=results)
+                    news_items = get_news(query=topic)
+                    headlines = fetch_head_lines(results=news_items)
                     summary = summarised_with_llm(headlines=headlines)
                     results[topic] = summary
                 except Exception as e:

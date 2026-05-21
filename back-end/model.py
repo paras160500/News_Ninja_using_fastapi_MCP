@@ -1,7 +1,7 @@
-from pydentic import BaseModel
+from pydantic import BaseModel
 from typing import List
 
 class NewsRequest(BaseModel):
-    topic : List[str]
+    topics : List[str]
     source_type : str
 
