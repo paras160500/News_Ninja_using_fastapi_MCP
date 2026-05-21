@@ -1,10 +1,5 @@
 # 📰 News Ninja — Fast API MCP
 
-> Your personal AI-powered news assistant: scrape, summarize, and listen.
-
----
-
-## 🗺️ Architecture Diagram
 
 ![Architecture Diagram](diagram.pdf.png)
 
