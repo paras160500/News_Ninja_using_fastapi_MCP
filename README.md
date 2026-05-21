@@ -1,74 +1,88 @@
-# News Ninja Fast API MCP
+# 📰 News Ninja — Fast API MCP
 
-A personal news assistant that scrapes news and Reddit discussions, generates a broadcast-style summary using Mistral AI, and converts the final script into downloadable audio using ElevenLabs.
+> Your personal AI-powered news assistant: scrape, summarize, and listen.
 
-## Project Overview
+---
 
-This repository contains a FastAPI backend and a Streamlit frontend:
+## 🗺️ Architecture Diagram
 
-- `back-end/back_end_logic.py` - FastAPI app exposing `/generate-news-audio`
-- `back-end/news_scraper.py` - news scraping and LLM summarization
-- `back-end/reddit_scrapper.py` - Reddit discussion scraping and summarization
-- `back-end/broadcast.py` - combines news and Reddit summaries into a broadcast-style script
-- `back-end/text_to_speech.py` - converts generated text to audio using ElevenLabs
-- `back-end/model.py` - request schema for the API
-- `front-end/ui_front_end.py` - Streamlit UI to select topics and trigger audio generation
+![Architecture Diagram](diagram.pdf)
 
-## Architecture
+> _Place `diagram.pdf` in the root of this repository for the diagram to render above._
 
-1. User enters one or more topics in the Streamlit UI.
-2. Frontend sends a POST request to the backend at `http://localhost:1234/generate-news-audio`.
-3. Backend scrapes news and/or Reddit using `TavilyClient`.
-4. Backend generates summaries using Mistral AI and merges them into a broadcast-style script.
-5. Generated script is converted into an MP3 audio file and returned to the frontend.
+---
 
-## Features
+## 📖 Overview
 
-- Topic-based news scraping via Tavily
-- Reddit discussion extraction for topic sentiment and community reaction
-- LLM-powered news and Reddit summarization
-- Broadcast-style summary generation
-- ElevenLabs TTS audio export
-- Streamlit web interface with audio playback and download
+**News Ninja** is a full-stack application that scrapes news articles and Reddit discussions on any topic, generates a broadcast-style summary using Mistral AI, and converts the final script into downloadable MP3 audio via ElevenLabs TTS.
 
-## Folder Structure
+It consists of two parts:
 
-- `back-end/`
-  - `back_end_logic.py`
-  - `news_scraper.py`
-  - `reddit_scrapper.py`
-  - `broadcast.py`
-  - `text_to_speech.py`
-  - `model.py`
-  - `utils_news_scrapper.py`
-  - `utils_reddit.py`
-- `front-end/`
-  - `ui_front_end.py`
-- `main.py` - placeholder entry point
-- `pyproject.toml` - project metadata
-- `README.md` - this file
+- **Backend** — A FastAPI service that orchestrates scraping, summarization, and audio generation.
+- **Frontend** — A Streamlit UI where users enter topics and play or download the generated audio.
 
-## Requirements
+---
 
-This project targets Python 3.11 and depends on the following packages:
+## ✨ Features
 
-- `fastapi`
-- `uvicorn`
-- `streamlit`
-- `python-dotenv`
-- `pydantic`
-- `requests`
-- `aiolimiter`
-- `tavily`
-- `elevenlabs`
-- `langchain-mistralai`
-- `langchain-core`
+- 🔍 Topic-based news scraping via [Tavily](https://tavily.com/)
+- 💬 Reddit discussion extraction for community sentiment and reactions
+- 🤖 LLM-powered summarization using Mistral AI
+- 📢 Broadcast-style script generation
+- 🔊 Text-to-speech audio export via [ElevenLabs](https://elevenlabs.io/)
+- 🖥️ Streamlit web interface with inline audio playback and MP3 download
 
-> Note: The exact package names for Mistral integration may vary based on your environment. If you use a different package or version, adjust accordingly.
+---
 
-## Environment Variables
+## 🗂️ Project Structure
 
-Create a `.env` file in the repository root with the following keys:
+```
+news-ninja/
+│   .gitignore
+│   .python-version
+│   main.py                         # Placeholder entry point (not used in app flow)
+│   pyproject.toml                  # Project metadata
+│   README.md
+│
+├───back-end/
+│       back_end_logic.py           # FastAPI entrypoint — exposes /generate-news-audio
+│       broadcast.py                # Merges news + Reddit into a broadcast-style script
+│       model.py                    # Pydantic request schema
+│       news_scraper.py             # News scraping and LLM summarization
+│       reddit_scrapper.py          # Reddit discussion scraping and summarization
+│       text_to_speech.py           # Converts text to MP3 using ElevenLabs
+│       utils_news_scrapper.py      # News scraping helpers
+│       utils_reddit.py             # Reddit scraping helpers
+│
+└───front-end/
+        ui_front_end.py             # Streamlit UI
+```
+
+---
+
+## ⚙️ How It Works
+
+```
+User enters topic(s)
+        ↓
+Streamlit UI sends POST → http://localhost:1234/generate-news-audio
+        ↓
+Backend scrapes news and/or Reddit via Tavily
+        ↓
+Mistral AI summarizes each source independently
+        ↓
+Both summaries are merged into a broadcast-style script
+        ↓
+ElevenLabs converts the script to MP3
+        ↓
+Audio is returned to the frontend for playback and download
+```
+
+---
+
+## 🔑 Environment Variables
+
+Create a `.env` file in the **repository root** with the following keys:
 
 ```env
 TAVILY_API_KEY=your_tavily_api_key
@@ -76,78 +90,119 @@ MISTRAL_API_KEY=your_mistral_api_key
 ELEVEN_API_KEY=your_elevenlabs_api_key
 ```
 
-If any of these keys are missing, the backend will fail when attempting to call the respective API.
+> ⚠️ If any key is missing or invalid, the backend will fail when calling the respective API.
 
-## Installation
+---
 
-1. Create and activate a virtual environment:
+## 🛠️ Requirements
+
+- Python **3.11+**
+
+| Package | Purpose |
+|---|---|
+| `fastapi` | Backend API framework |
+| `uvicorn` | ASGI server |
+| `streamlit` | Frontend UI |
+| `python-dotenv` | Load `.env` variables |
+| `pydantic` | Request schema validation |
+| `requests` | HTTP client |
+| `aiolimiter` | Async rate limiting |
+| `tavily` | News and Reddit scraping |
+| `elevenlabs` | Text-to-speech audio generation |
+| `langchain-mistralai` | Mistral AI LLM integration |
+| `langchain-core` | LangChain core utilities |
+
+---
+
+## 🚀 Installation
+
+**1. Clone the repository**
+
+```bash
+git clone https://github.com/your-username/news-ninja.git
+cd news-ninja
+```
+
+**2. Create and activate a virtual environment**
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
-2. Install dependencies:
+**3. Install dependencies**
 
 ```powershell
 pip install fastapi uvicorn streamlit python-dotenv pydantic requests aiolimiter tavily elevenlabs langchain-mistralai langchain-core
 ```
 
-## Running the App
+**4. Set up your `.env` file** (see [Environment Variables](#-environment-variables))
 
-### Start the backend
+---
+
+## ▶️ Running the App
+
+### Start the Backend
 
 ```powershell
 python .\back-end\back_end_logic.py
 ```
 
-The backend listens on `http://localhost:1234`.
+The backend will be available at `http://localhost:1234`.
 
-### Start the frontend
+### Start the Frontend
 
 ```powershell
 cd .\front-end
 streamlit run ui_front_end.py
 ```
 
-Open the Streamlit URL shown in the terminal to use the app.
+Open the URL shown in the terminal (usually `http://localhost:8501`) to use the app.
 
-## Usage
+---
 
-1. Enter one or more topics in the Streamlit UI.
-2. Choose the data source: `both`, `news`, or `reddit`.
-3. Click `Generate Summary`.
-4. Listen to the generated audio or download it as `news-summary.mp3`.
+## 🧭 Usage
 
-## Troubleshooting
+1. Enter one or more topics in the Streamlit UI (e.g., `AI, climate change, stock market`).
+2. Choose your data source: `both`, `news`, or `reddit`.
+3. Click **Generate Summary**.
+4. Listen to the generated audio inline or download it as `news-summary.mp3`.
 
-### API Error (500): list indices must be integers or slices, not str
+---
 
-This error usually indicates the backend received malformed data or a failed API response inside the summarization pipeline.
+## 🐛 Troubleshooting
 
-Check the following:
+### `API Error (500): list indices must be integers or slices, not str`
 
-- `TAVILY_API_KEY`, `MISTRAL_API_KEY`, and `ELEVEN_API_KEY` are set correctly in `.env`
-- Backend logs for exact exception details
-- That the backend is running before you click the button in Streamlit
-- The correct port and URL in `front-end/ui_front_end.py` (`BACKEND_URL = "http://localhost:1234"`)
+This usually means the backend received malformed data or a failed API response in the summarization pipeline. Check the following:
 
-### Common failure points
+- All three API keys are set correctly in `.env`
+- The backend is running before clicking Generate in the UI
+- The frontend is pointing to the correct backend URL (`BACKEND_URL = "http://localhost:1234"` in `ui_front_end.py`)
+- Review the backend terminal logs for the exact exception
 
-- Missing or invalid ElevenLabs API key causes text-to-speech conversion to fail.
-- Tavily search may return empty results or unexpected data structure.
-- LLM calls may raise exceptions when service limits are reached or keys are invalid.
+### Common Failure Points
 
-## Notes
+| Symptom | Likely Cause |
+|---|---|
+| Audio not generated | Missing or invalid `ELEVEN_API_KEY` |
+| Empty or broken summaries | Tavily returned no results or unexpected data shape |
+| LLM errors | `MISTRAL_API_KEY` invalid or rate limit reached |
+| Frontend can't reach backend | Backend not started, or wrong port/URL |
 
-- `main.py` is a placeholder and not used by the actual app flow.
-- `back-end/back_end_logic.py` is the primary FastAPI entrypoint.
-- Audio files are saved to the `audio/` folder when generated.
+---
 
-## Future Improvements
+## 🔮 Future Improvements
 
-- Add request validation and better error responses in the API.
-- Improve retry handling for external API calls.
-- Add caching for repeated topic requests.
-- Support more voices or TTS providers.
-- Add a dedicated frontend launch script.
+- [ ] Add request validation and structured error responses in the API
+- [ ] Improve retry handling for external API calls
+- [ ] Add caching for repeated topic requests
+- [ ] Support multiple voices or alternative TTS providers
+- [ ] Add a dedicated frontend launch script
+- [ ] Dockerize the full stack for easier deployment
+
+---
+
+## 📄 License
+
+This project is for personal and educational use. See individual API providers for their respective terms of service.
