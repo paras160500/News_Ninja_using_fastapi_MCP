@@ -6,9 +6,7 @@
 
 ## 🗺️ Architecture Diagram
 
-![Architecture Diagram](diagram.pdf)
-
-> _Place `diagram.pdf` in the root of this repository for the diagram to render above._
+![Architecture Diagram](diagram.pdf.png)
 
 ---
 
