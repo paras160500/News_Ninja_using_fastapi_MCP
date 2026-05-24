@@ -1,0 +1,11 @@
+fastapi 
+uvicorn 
+streamlit 
+python-dotenv 
+pydantic 
+requests 
+aiolimiter 
+tavily 
+elevenlabs 
+langchain-mistralai 
+langchain-core
